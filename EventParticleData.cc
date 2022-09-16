@@ -60,9 +60,6 @@ G4bool EventParticleData::ProcessHits(G4Step* aStep,G4TouchableHistory*)
     
 		G4ThreeVector pos = aStep->GetPostStepPoint()->GetPosition();
 		
-		//secondaries = aStep->GetSecondaryInCurrentStep();
-		//G4cout << secondaries << G4endl;
-		
 	        fEventID        = GetEventID();
 		fPType          = aStep->GetTrack()->GetDefinition()->GetPDGEncoding();
 		//fPosX           = pos.x();
@@ -79,9 +76,6 @@ G4bool EventParticleData::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 		fTrackLength    = aStep->GetTrack()->GetTrackLength();
 		fTrackID        = aStep->GetTrack()->GetTrackID();
 		
-		//TrackID.push_back(fTrackID);
-		//std::cout << fTrackID << std::endl;
-	
 		const G4VProcess* originProcess = aStep->GetTrack()->GetCreatorProcess();
 		if (originProcess){
 			fOriginProcessName = originProcess->GetProcessName();}
@@ -187,28 +181,71 @@ void EventParticleData::UserHookForEndOfEvent()
         fTrackLen = 0.;
         fTrackNo = 0.;
         fParent = 0.;
-        
-       //G4TrackVector* secondaries = TsScoringManager->GimmeSecondaries();
-       //size_t nbtrk = (*secondaries).size();
        
-       // NÃO ESTA A FUNCIOANR ASSIM RIP, REVER O DOS PROTOES E COLOCAR NUM SCORER Á PARTE E DEIXAR ESTE SO PARA SECUNDARIOS
-       
-       
-       /*
+ 	// tenho de por uma condição entra para o ultimo valor em que NoHits = max	
+ 	
+ 	/*
+ 	
+ 	primeiro hit = protão
+ 	logo no loop
+ 	if particle_id == 2122
+ 		edep = edep(0)
+ 		if track id(i) = track_id (1+i)
+ 		... o que ja tenho
+ 		end
+ 	else	
+ 		if track id(i) = track_id (1+i)
+ 		...
+ 		end
+ 	end 
+ 	
+ 	*/
+ 	
+ 	
 	if ( NoHits > 0 ) {
-		for ( G4int k = 0; k < NoHits ; k ++ ) {
-			if ((*fHitsCollection)[k]->GetIncidentEnergy()>0){
-				if ((*fHitsCollection)[k]->GetTrackID() != (*fHitsCollection)[k+1]->GetTrackID()){
-					TrackID.push_back((*fHitsCollection)[k]->GetTrackID());
+		for ( G4int i = 1; i < NoHits ; i ++ ) {
+			if ((*fHitsCollection)[i]->GetIncidentEnergy()>0){
+				if ((*fHitsCollection)[i]->GetTrackID() == (*fHitsCollection)[i-1]->GetTrackID()){
+				
+					fEventNo = (*fHitsCollection)[i]->GetEventID();
+					fParticleType = (*fHitsCollection)[i]->GetParticleID();
+					
+					fPositionX = (*fHitsCollection)[i]->GetPos().x();
+					fPositionY = (*fHitsCollection)[i]->GetPos().y();
+					fPositionZ = (*fHitsCollection)[i]->GetPos().z();			
+					
+					fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
+					fEdep += (*fHitsCollection)[i]->GetEdep();
+					
+					fTrackLen = (*fHitsCollection)[i]->GetTrackLength();
+					fTrackNo = (*fHitsCollection)[i]->GetTrackID();
+					fParent = (*fHitsCollection)[i]->GetParentID();	
+				}
+				else{  // ok assim nao inclui é os protoes, testar com i-1 ou entao ignorar porque vamos ter de alterar para os protoes anyway?
+				
+					fEventNo = (*fHitsCollection)[i]->GetEventID();
+					fParticleType = (*fHitsCollection)[i]->GetParticleID();
+					
+					fPositionX = (*fHitsCollection)[i]->GetPos().x();
+					fPositionY = (*fHitsCollection)[i]->GetPos().y();
+					fPositionZ = (*fHitsCollection)[i]->GetPos().z();			
+					
+					fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
+					fEdep += (*fHitsCollection)[i]->GetEdep();
+					
+					fTrackLen = (*fHitsCollection)[i]->GetTrackLength();
+					fTrackNo = (*fHitsCollection)[i]->GetTrackID();
+					fParent = (*fHitsCollection)[i]->GetParentID();
+					
+					if (fEdep > 0.){
+						fNtuple->Fill();
+					}
 				}
 			}
 		}
-	}  
-	//std::cout << TrackID.size() << std::endl;     
-	//std::cout << NoHits << std::endl; 
-	*/
-	
-	// tenho de por uma condição entra para o ultimo valor em que NoHits = max	
+	}
+ 	
+ 	/*
 	
 	
 	if ( NoHits > 0 ) {
@@ -239,16 +276,9 @@ void EventParticleData::UserHookForEndOfEvent()
 				}
 			}
 		}
-	}	
+	}
 	
-	/*
-	if (fEdep > 0.){
-        	fNtuple->Fill();
-        	//std::cout << "tracks" << TrackID.size() << std::endl;     
-		std::cout << "Hits" << NoHits << std::endl;  
-        }
-        
-        */
+	*/	
 
 	delete fHitsCollection;
 	fHitsCollection = new TrackerHitClasssCollection();
