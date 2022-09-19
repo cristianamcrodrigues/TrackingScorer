@@ -1,7 +1,7 @@
 Tracking Scorer Status
 
 Able to score all tracks of an event excepting the last one.
- --> The last hit is not being accounted for.
+ --> The last hit is not being accounted for. ===> RESOLVED
  
 Energy deposited by each particle is not yet correct.
  --> Is displayed as the total energy deposited in the event due to that track and the previous ones.
