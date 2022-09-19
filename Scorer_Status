@@ -5,6 +5,11 @@ Able to score all tracks of an event excepting the last one.
  
 Energy deposited by each particle is not yet correct.
  --> Is displayed as the total energy deposited in the event due to that track and the previous ones.
+ 
+ Proton Edep is OK !
+ Electron Edep = Ekin is OK !
+ Photon Edep ????
+ Heavy Ion Edep ????
   
 Still missing the origin process information.
 Proton initial kinetic energy is not at the phantom entrance.
