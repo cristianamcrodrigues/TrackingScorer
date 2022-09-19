@@ -201,6 +201,9 @@ void EventParticleData::UserHookForEndOfEvent()
  	
  	*/
  	
+ 	// FALTA CONDIÇÃO PARA PROTOES PARA ISSO AFETA EDEP
+ 	// DESCOBRIR COMO POR EDEP CERTA
+ 	
  	
 	if ( NoHits > 0 ) {
 		for ( G4int i = 1; i < NoHits ; i ++ ) {
@@ -221,7 +224,7 @@ void EventParticleData::UserHookForEndOfEvent()
 					fTrackNo = (*fHitsCollection)[i]->GetTrackID();
 					fParent = (*fHitsCollection)[i]->GetParentID();	
 				}
-				else{  // ok assim nao inclui é os protoes, testar com i-1 ou entao ignorar porque vamos ter de alterar para os protoes anyway?
+				else if (i == NoHits){
 				
 					fEventNo = (*fHitsCollection)[i]->GetEventID();
 					fParticleType = (*fHitsCollection)[i]->GetParticleID();
@@ -239,11 +242,60 @@ void EventParticleData::UserHookForEndOfEvent()
 					
 					if (fEdep > 0.){
 						fNtuple->Fill();
+					}				
+				}
+				else{  // ok assim nao inclui é os protoes, testar com i-1 ou entao ignorar porque vamos ter de alterar para os protoes anyway?
+				
+					fEventNo = (*fHitsCollection)[i-1]->GetEventID();
+					fParticleType = (*fHitsCollection)[i-1]->GetParticleID();
+					
+					fPositionX = (*fHitsCollection)[i-1]->GetPos().x();
+					fPositionY = (*fHitsCollection)[i-1]->GetPos().y();
+					fPositionZ = (*fHitsCollection)[i-1]->GetPos().z();			
+					
+					fEkin = (*fHitsCollection)[i-1]->GetIncidentEnergy();
+					fEdep += (*fHitsCollection)[i-1]->GetEdep();
+					
+					fTrackLen = (*fHitsCollection)[i-1]->GetTrackLength();
+					fTrackNo = (*fHitsCollection)[i-1]->GetTrackID();
+					fParent = (*fHitsCollection)[i-1]->GetParentID();
+					
+					if (fEdep > 0.){
+						fNtuple->Fill();
 					}
+					
+					// Assim fica em falta o ultimo indice, por isso condição if i == NoHIts	
+					// tirar os ifs
+					// colocar no for n-hits - 1 e começar em 0 sendo que o i vai de zero até i+1 e gaurda-se o i menos no ultimo em que se guarda i+1?			
+				
+				/*
+				
+					fEventNo = (*fHitsCollection)[i]->GetEventID();
+					fParticleType = (*fHitsCollection)[i]->GetParticleID();
+					
+					fPositionX = (*fHitsCollection)[i]->GetPos().x();
+					fPositionY = (*fHitsCollection)[i]->GetPos().y();
+					fPositionZ = (*fHitsCollection)[i]->GetPos().z();			
+					
+					fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
+					fEdep += (*fHitsCollection)[i]->GetEdep();
+					
+					fTrackLen = (*fHitsCollection)[i]->GetTrackLength();
+					fTrackNo = (*fHitsCollection)[i]->GetTrackID();
+					fParent = (*fHitsCollection)[i]->GetParentID();
+					
+				*/
+					
+					//if (fEdep > 0.){
+					//	fNtuple->Fill();
+					//}
 				}
 			}
 		}
 	}
+	
+	//std::cout << "hits" << NoHits << std::endl;
+	//std::cout << "i" << i << std::endl;
  	
  	/*
 	
