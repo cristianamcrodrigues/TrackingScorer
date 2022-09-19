@@ -9,7 +9,7 @@ Energy deposited by each particle is not yet correct.
  Proton Edep is OK !
  Electron Edep = Ekin is OK !
  Photon Edep ????
- Heavy Ion Edep ????
+ Heavy Ion Edep  can I assume also fEdep ????
   
 Still missing the origin process information.
 Proton initial kinetic energy is not at the phantom entrance.
