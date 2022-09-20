@@ -3,13 +3,13 @@
 Able to score all tracks of an event excepting the last one.
  --> The last hit is not being accounted for. ===> RESOLVED
  
-Energy deposited by each particle is not yet correct.
+Energy deposited by each particle is not yet correct. ===> RESOLVED
  --> Is displayed as the total energy deposited in the event due to that track and the previous ones.
  
  Proton Edep is OK !
  Electron Edep = Ekin is OK !
- Photon Edep ????
+ Photon Edep is OK !
  Heavy Ion Edep  can I assume also fEdep ????
   
-Still missing the origin process information. - RESOLVED
-Proton initial kinetic energy is not at the phantom entrance.
+Still missing the origin process information. ===> RESOLVED
+Proton initial kinetic energy is not at the phantom entrance. ===> RESOLVED
