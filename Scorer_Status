@@ -11,5 +11,5 @@ Energy deposited by each particle is not yet correct.
  Photon Edep ????
  Heavy Ion Edep  can I assume also fEdep ????
   
-Still missing the origin process information. - Added but not working ok.
+Still missing the origin process information. - RESOLVED
 Proton initial kinetic energy is not at the phantom entrance.
