@@ -65,6 +65,7 @@ class TrackerHitClass : public G4VHit
     void SetTrackID  (G4int track)      { fTrackID = track; };
     void SetEdep     (G4double de)      { fEdep = de; };
     void SetPos      (G4ThreeVector xyz){ fPos = xyz; };
+    void SetProtonIncidentEnergy (G4double ep) {fProtonIncidentEnergy = ep;};
     void SetIncidentEnergy (G4double e) {fIncidentEnergy = e;};
     void SetParticleID(G4int id) {fParticleID = id;}
     void SetTrackLength (G4double tracklength) {fTrackLength = tracklength;};
@@ -76,6 +77,7 @@ class TrackerHitClass : public G4VHit
     G4int GetTrackID() const     { return fTrackID; };
     G4double GetEdep() const     { return fEdep; };
     G4ThreeVector GetPos() const { return fPos; };
+    G4double GetProtonIncidentEnergy() const {return fProtonIncidentEnergy;};
     G4double GetIncidentEnergy() const {return fIncidentEnergy;};
     G4int GetParticleID() const {return fParticleID;}
     G4double GetTrackLength() const {return fTrackLength;}
@@ -90,6 +92,7 @@ class TrackerHitClass : public G4VHit
       G4double      fEdep;
       G4ThreeVector fPos;
       G4int         fParticleID;
+      G4double      fProtonIncidentEnergy;
       G4double      fIncidentEnergy;
       G4double      fTrackLength;
       G4int         fEventID;

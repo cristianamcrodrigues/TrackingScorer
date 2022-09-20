@@ -54,6 +54,7 @@ TrackerHitClass::TrackerHitClass()
 		 fPos(G4ThreeVector()),
 		 fParticleID(-1),
 		 fIncidentEnergy(0.),
+		 fProtonIncidentEnergy(0.),
 		 fTrackLength(0.),
 		 fEventID(0.),
 		 fParentID(-1),
@@ -72,6 +73,7 @@ TrackerHitClass::TrackerHitClass(const TrackerHitClass& right)
   fTrackID   = right.fTrackID;
   fEdep      = right.fEdep;
   fPos       = right.fPos;
+  fProtonIncidentEnergy = right.fProtonIncidentEnergy;
   fIncidentEnergy = right.fIncidentEnergy;
   fParticleID = right.fParticleID;
   fTrackLength = right.fTrackLength;
@@ -87,6 +89,7 @@ const TrackerHitClass& TrackerHitClass::operator=(const TrackerHitClass& right)
   fTrackID   = right.fTrackID;
   fEdep      = right.fEdep;
   fPos       = right.fPos;
+  fProtonIncidentEnergy = right.fProtonIncidentEnergy;
   fIncidentEnergy = right.fIncidentEnergy;
   fParticleID = right.fParticleID;
   fTrackLength = right.fTrackLength;
