@@ -30,9 +30,7 @@ public:
     virtual ~EventParticleData();
 
     G4bool ProcessHits(G4Step*,G4TouchableHistory*);
-   // virtual void ProtonTrackInfo();
-    //virtual void SecondariesTrackInfo();
-   virtual void UserHookForEndOfEvent();
+    virtual void UserHookForEndOfEvent();
 
 private:
 
@@ -41,34 +39,31 @@ private:
         
 	// Output variables
 	G4int fEventID;
-	G4float fPosX;
-	G4float fPosY;
-	G4float fPosZ;
+	//G4float fPosX;
+	//G4float fPosY;
+	//G4float fPosZ;
 	G4float fEnergyDeposit;
-	G4float fEnergyDepositPerEvent;
+	G4float fKineticEnergy_proton;
 	G4float fKineticEnergy;	
 	G4int fPType;
 	G4String fOriginProcessName;
-	G4String fLastVolumeName;
+	//G4String fLastVolumeName;
 	G4int fparentId;
 	G4float fTrackLength;
 	G4int fTrackID;
 	
 	G4int fEventNo;
 	G4int fParticleType;
-	
 	G4float fPositionX;
 	G4float fPositionY;
 	G4float fPositionZ;			
-	
 	G4float fEkin;
 	G4float fEdep;
-	
 	G4float fTrackLen;
 	G4int fTrackNo;
 	G4int fParent;
+	G4String fProcess;
 	
-	//const std::vector<const G4Track*>* secondaries;
-	std::vector<int> TrackID;
+	G4double fEdep_phot;
 };
 #endif
