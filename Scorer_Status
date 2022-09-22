@@ -15,3 +15,4 @@ Still missing the origin process information. ===> RESOLVED
 Proton initial kinetic energy is not at the phantom entrance. ===> RESOLVED
 
 problem: last electron of each event is diaplaying EKin = 150 MeV
+if the first track is electron is also not ok.
