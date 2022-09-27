@@ -144,7 +144,7 @@ void EventParticleData::UserHookForEndOfEvent()
 			if ((*fHitsCollection)[i]->GetIncidentEnergy()>0){
 				if ((*fHitsCollection)[i]->GetTrackID() == (*fHitsCollection)[i-1]->GetTrackID()){					
 					
-					fEdep += (*fHitsCollection)[i]->GetEdep();
+					//fEdep += (*fHitsCollection)[i]->GetEdep();
 					
 					if ((*fHitsCollection)[i]->GetParticleID() == 22) {
 						fEdep_phot += (*fHitsCollection)[i-1]->GetEdep();
@@ -154,6 +154,9 @@ void EventParticleData::UserHookForEndOfEvent()
 					}
 					else if ((*fHitsCollection)[i]->GetParticleID() == 2212) {
 						fEdep_p += (*fHitsCollection)[i-1]->GetEdep();
+					}
+					else{
+						fEdep += (*fHitsCollection)[i-1]->GetEdep();
 					}
 					
 					if ((*fHitsCollection)[i]->GetVolume() != fScoringVolume && (*fHitsCollection)[i]->GetParticleID() == 11){
@@ -199,6 +202,8 @@ void EventParticleData::UserHookForEndOfEvent()
 							fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
 						}
 						else{
+							fEdep = fEdep + (*fHitsCollection)[i]->GetEdep();
+							fEdep = 0.;
 							fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
 						}
 						
@@ -257,7 +262,14 @@ void EventParticleData::UserHookForEndOfEvent()
 					}
 					else{   // heavy ions with low range
 						fEkin = (*fHitsCollection)[i-1]->GetIncidentEnergy();
-						fEdep = fEkin;
+						if ((*fHitsCollection)[i-1]->GetTrackID() == (*fHitsCollection)[i-2]->GetTrackID()){
+							fEdep = fEdep + (*fHitsCollection)[i-1]->GetEdep();
+							fEdep = 0.;
+						}
+						else{
+							fEdep = (*fHitsCollection)[i-1]->GetEdep();
+							//fEdep = fEkin;
+						}
 					}
 					
 					fTrackLen = (*fHitsCollection)[i-1]->GetTrackLength();

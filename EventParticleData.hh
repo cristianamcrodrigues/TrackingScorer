@@ -67,12 +67,12 @@ private:
 	G4String fProcess;	
 	G4String fVolume;
 	
-	G4int fStepNumber;
-	
 	G4double fEdep_phot;
 	G4double fEdep_e;
-	
 	G4double fEkin_e;
 	G4double fEkin_res;
+	G4double fEdep_p;
+	G4double fEkin_p;
+	//G4double fEkin_res1;
 };
 #endif
