@@ -71,7 +71,7 @@ G4bool EventParticleData::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 		//fPosZ           = pos.z();
 		
 		fEnergyDeposit  = aStep->GetTotalEnergyDeposit();
-		if (fEnergyDeposit <= 0.) return false;
+		//if (fEnergyDeposit <= 0.) return false;  // if not commented then particle that are created in scoring volume but that not deposit energy are not accounted.
 		
 		fKineticEnergy_proton  = aStep->GetPreStepPoint()->GetKineticEnergy();
 		fKineticEnergy = aStep->GetTrack()->GetVertexKineticEnergy();
