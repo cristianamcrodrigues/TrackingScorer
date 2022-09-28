@@ -74,5 +74,6 @@ private:
 	G4double fEdep_p;
 	G4double fEkin_p;
 	//G4double fEkin_res1;
+	G4double fEdep_ion;
 };
 #endif

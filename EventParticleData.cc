@@ -156,7 +156,7 @@ void EventParticleData::UserHookForEndOfEvent()
 						fEdep_p += (*fHitsCollection)[i-1]->GetEdep();
 					}
 					else{
-						fEdep += (*fHitsCollection)[i-1]->GetEdep();
+						fEdep_ion += (*fHitsCollection)[i-1]->GetEdep();
 					}
 					
 					if ((*fHitsCollection)[i]->GetVolume() != fScoringVolume && (*fHitsCollection)[i]->GetParticleID() == 11){
@@ -201,17 +201,25 @@ void EventParticleData::UserHookForEndOfEvent()
 							fEdep_phot = 0.;
 							fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
 						}
-						else{
-							fEdep = fEdep + (*fHitsCollection)[i]->GetEdep();
-							fEdep = 0.;
+						else{ // heavy ions with low range or neutrons
+							//fEdep = fEdep + (*fHitsCollection)[i]->GetEdep();
+							//fEdep = 0.;
+							//fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
+							
 							fEkin = (*fHitsCollection)[i]->GetIncidentEnergy();
+							if ((*fHitsCollection)[i]->GetTrackID() == (*fHitsCollection)[i-1]->GetTrackID()){
+								fEdep = fEdep_ion + (*fHitsCollection)[i]->GetEdep();
+								fEdep_ion = 0.;
+							}
+							else{ // heavy ions with low range or neutrons
+								fEdep = (*fHitsCollection)[i]->GetEdep();
+							}
 						}
 						
 						fTrackLen = (*fHitsCollection)[i]->GetTrackLength();
 						fTrackNo = (*fHitsCollection)[i]->GetTrackID();
 						fParent = (*fHitsCollection)[i]->GetParentID();
 						fProcess = (*fHitsCollection)[i]->GetProcess();
-						
 						fVolume = (*fHitsCollection)[i]->GetVolume();
 						
 						//if (fEdep > 0.){
@@ -260,15 +268,14 @@ void EventParticleData::UserHookForEndOfEvent()
 						fEdep = (*fHitsCollection)[i-1]->GetEdep();
 						fEkin = (*fHitsCollection)[i-1]->GetIncidentEnergy();
 					}
-					else{   // heavy ions with low range
+					else{   // heavy ions with low range or neutrons
 						fEkin = (*fHitsCollection)[i-1]->GetIncidentEnergy();
 						if ((*fHitsCollection)[i-1]->GetTrackID() == (*fHitsCollection)[i-2]->GetTrackID()){
-							fEdep = fEdep + (*fHitsCollection)[i-1]->GetEdep();
-							fEdep = 0.;
+							fEdep = fEdep_ion + (*fHitsCollection)[i-1]->GetEdep();
+							fEdep_ion = 0.;
 						}
 						else{
 							fEdep = (*fHitsCollection)[i-1]->GetEdep();
-							//fEdep = fEkin;
 						}
 					}
 					
@@ -276,7 +283,6 @@ void EventParticleData::UserHookForEndOfEvent()
 					fTrackNo = (*fHitsCollection)[i-1]->GetTrackID();
 					fParent = (*fHitsCollection)[i-1]->GetParentID();
 					fProcess = (*fHitsCollection)[i-1]->GetProcess();  
-					
 					fVolume = (*fHitsCollection)[i-1]->GetVolume();
 					
 					//if (fEdep > 0.){
