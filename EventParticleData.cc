@@ -159,7 +159,7 @@ void EventParticleData::UserHookForEndOfEvent()
 						fEdep_ion += (*fHitsCollection)[i-1]->GetEdep();
 					}
 					
-					if ((*fHitsCollection)[i]->GetVolume() != fScoringVolume && (*fHitsCollection)[i]->GetParticleID() == 11){
+					if ((*fHitsCollection)[i]->GetVolume() != fScoringVolume && (*fHitsCollection)[i]->GetParticleID() == 11 || (*fHitsCollection)[i]->GetParticleID() == -11){
 						fEkin_e += (*fHitsCollection)[i-1]->GetProtonIncidentEnergy();
 						fEkin_res += (*fHitsCollection)[i]->GetProtonIncidentEnergy();
 					}
